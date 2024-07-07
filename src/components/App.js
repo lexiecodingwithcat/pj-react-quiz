@@ -18,6 +18,8 @@ const initialState = {
   index: 0,
   answer: null,
   points: 0,
+  //we need a new state to remember the points
+  highestScore: 0,
 };
 function reducer(state, action) {
   switch (action.type) {
@@ -46,14 +48,19 @@ function reducer(state, action) {
     case "finished":
       //if only change the UI then set the status
       //if it is a handle event function then no need to set status
-      return { ...state, status: "finished" };
+      return {
+        ...state,
+        status: "finished",
+        highestScore:
+          state.points > state.highestScore ? state.points : state.highestScore,
+      };
     default:
       throw new Error("action unkown");
   }
 }
 
 export default function App() {
-  const [{ questions, status, index, answer, points }, dispatch] = useReducer(
+  const [{ questions, status, index, answer, points, highestScore }, dispatch] = useReducer(
     reducer,
     initialState
   );
@@ -108,6 +115,7 @@ export default function App() {
             points={points}
             maxPossiblePoints={maxPossiblePoints}
             index={index}
+            highestScore= {highestScore}
           />
         )}
       </Main>
