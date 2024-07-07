@@ -14,6 +14,7 @@ const initialState = {
   //because we will display the question one by one by re-rendering the screen
   index: 0,
   answer: null,
+  points: 0,
 };
 function reducer(state, action) {
   switch (action.type) {
@@ -24,7 +25,16 @@ function reducer(state, action) {
     case "start":
       return { ...state, status: "active" };
     case "newAnswer":
-      return { ...state, answer: action.payload };
+      const question = state.questions[state.index];
+      return {
+        ...state,
+        answer: action.payload,
+        points:
+          //this action.payload is the index we used before to set the answer
+          action.payload === question.correctOption
+            ? state.points + question.points
+            : state.points,
+      };
     default:
       throw new Error("action unkown");
   }
