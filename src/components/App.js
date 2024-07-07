@@ -7,6 +7,7 @@ import StartScreen from "./StartScreen";
 import Question from "./Question";
 import NextButton from "./NextButton";
 import Progress from "./Progress";
+import FinishScreen from "./FinishScreen";
 
 const initialState = {
   questions: [],
@@ -42,6 +43,10 @@ function reducer(state, action) {
     case "nextQuestion":
       //set answer back to null, otherwise the answer will be the one in the last question
       return { ...state, index: state.index + 1, answer: null };
+    case "finished":
+      //if only change the UI then set the status
+      //if it is a handle event function then no need to set status
+      return { ...state, status: "finished" };
     default:
       throw new Error("action unkown");
   }
@@ -90,8 +95,20 @@ export default function App() {
               dispatch={dispatch}
               answer={answer}
             />
-            <NextButton dispatch={dispatch} answer={answer} />
+            <NextButton
+              dispatch={dispatch}
+              answer={answer}
+              numQuestions={numQuestions}
+              index={index}
+            />
           </>
+        )}
+        {status === "finished" && (
+          <FinishScreen
+            points={points}
+            maxPossiblePoints={maxPossiblePoints}
+            index={index}
+          />
         )}
       </Main>
     </div>
