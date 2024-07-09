@@ -10,6 +10,7 @@ import Progress from "./Progress";
 import FinishScreen from "./FinishScreen";
 import Footer from "./Footer";
 import Timer from "./Timer";
+const SECS_PER_QUESTION = 30;
 
 const initialState = {
   questions: [],
@@ -31,7 +32,11 @@ function reducer(state, action) {
     case "dataFailed":
       return { ...state, status: "error" };
     case "start":
-      return { ...state, status: "active" };
+      return {
+        ...state,
+        status: "active",
+        secondsRemaining: state.questions.length * SECS_PER_QUESTION,
+      };
     case "newAnswer":
       const question = state.questions[state.index];
       return {
@@ -71,6 +76,8 @@ function reducer(state, action) {
         ...state,
         secondsRemaining: state.secondsRemaining - 1,
         status: state.secondsRemaining === 0 ? "finished" : state.status,
+        //we still need to update the highest score here
+        //the status change only display the 'finished' UI
         highestScore:
           state.points > state.highestScore ? state.points : state.highestScore,
       };
