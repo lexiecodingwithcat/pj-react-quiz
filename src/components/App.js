@@ -69,7 +69,7 @@ function reducer(state, action) {
         index: 0,
         answer: null,
         points: 0,
-        secondsRemaining: 10,
+      
       };
     case "tick":
       return {
