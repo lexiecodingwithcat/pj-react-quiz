@@ -2,11 +2,15 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./components/App";
+import {QuizProvider} from "./contexts/QuizContext"
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
+    {/* wrap the whole APP into the context instead of wrapping all small componenets */}
+    <QuizProvider>
     <App />
+    </QuizProvider>
   </React.StrictMode>
 );
 

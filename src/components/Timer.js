@@ -1,6 +1,8 @@
 import { useEffect } from "react";
+import { useQuiz } from "../contexts/QuizContext";
 
-function Timer({ secondsRemaining, dispatch }) {
+function Timer() {
+  const { secondsRemaining, dispatch } = useQuiz();
   const mins = Math.floor(secondsRemaining / 60);
   const secs = secondsRemaining % 60;
   // we start the timer when the component is mounted
@@ -19,7 +21,8 @@ function Timer({ secondsRemaining, dispatch }) {
   );
   return (
     <div className="timer">
-      {mins < 10 && "0"}{mins} : {secs < 10 && "0"}
+      {mins < 10 && "0"}
+      {mins} : {secs < 10 && "0"}
       {secs}
     </div>
   );

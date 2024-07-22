@@ -1,4 +1,7 @@
-function NextButton({ dispatch, answer, numQuestions, index }) {
+import { useQuiz } from "../contexts/QuizContext";
+
+function NextButton() {
+  const { dispatch, answer, numQuestions, index } = useQuiz();
   if (answer === null) return null;
   //not display the next question button when reach to the last question
   //when index is 14, no button
@@ -11,7 +14,7 @@ function NextButton({ dispatch, answer, numQuestions, index }) {
         Next
       </button>
     );
-    // if it is the last question 
+  // if it is the last question
   if (index === numQuestions - 1)
     return (
       <button
